@@ -33,7 +33,7 @@ app.get('/fetch/:DATE',function(req,res){
 app.get('/' , function(req,res){
     res.send("Hello")
 })
-
+ 
 app.get('/data' , async function(req,res){
     const data = await newcolDB.find();
     res.json(data);
