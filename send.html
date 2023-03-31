@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Send Files</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      margin-top: 50px;
+    }
+    #upload-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed gray;
+      height: 300px;
+      width: 400px;
+      margin-top: 50px;
+      font-size: 24px;
+      color: gray;
+    }
+    input[type=file] {
+      display: none;
+    }
+    button[type=submit] {
+      margin-top: 30px;
+      font-size: 24px;
+      padding: 16px 32px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Send Files</h1>
+  <div id="upload-box" ondragover="handleDragOver(event)" ondrop="handleFileSelect(event)">
+    <p>Drag and drop your files here, or</p>
+    <label for="file-upload" class="custom-file-upload">
+      <input id="file-upload" type="file" multiple onchange="handleFileSelect(event)">
+      Choose files
+    </label>
+  </div>
+  <button id="send-btn" type="submit">Send</button>
+
+  <script>
+    function handleFileSelect(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      var files = evt.target.files || evt.dataTransfer.files;
+
+      var fileList = document.createElement('ul');
+      for (var i = 0, f; f = files[i]; i++) {
+        var listItem = document.createElement('li');
+        listItem.innerHTML = f.name + ' (' + f.type + ') - ' + f.size + ' bytes';
+        fileList.appendChild(listItem);
+      }
+
+      var uploadBox = document.getElementById('upload-box');
+      uploadBox.innerHTML = '';
+      uploadBox.appendChild(fileList);
+    }
+
+    function handleDragOver(evt) {
+      evt.stopPropagation();
+      evt.preventDefault();
+      evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    }
+
+    // Add event listener to send button
+    var sendBtn = document.getElementById('send-btn');
+    sendBtn.addEventListener('click', function() {
+      // Check if there are any files selected
+      var fileList = document.querySelector('ul');
+      if (!fileList || fileList.children.length === 0) {
+        alert('Please select a file to send.');
+        return;
+      }
+      
+      // Show notification
+      if(Notification.permission !== "granted") {
+        Notification.requestPermission();
+      } else {
+		alert('Your file has been successfully sent');
+        
+      }
+    });
+  </script>
+</body>
+</html>
