@@ -6,8 +6,8 @@ export default function Home() {
     <div>
         <h1>Home</h1>
         <div>
-            <Link to="/send"> Send</Link><br/>
-            <Link to="/receive"> Receive</Link>
+            <button><Link to="/send"> Send</Link><br/></button>
+	          <button> <Link to="/receive"> Receive</Link></button> 
         </div>
     </div>
   )
