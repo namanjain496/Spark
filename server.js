@@ -2,6 +2,7 @@ const express=require("express");
 const app=express();
 const mongoose=require("mongoose");
 const  path = require('path')
+const newcolDB = require('./models/newcol')
 
 // mongoose.connect("",{
 //     useNewUrlParser:true,
@@ -31,6 +32,11 @@ app.get('/fetch/:DATE',function(req,res){
 
 app.get('/' , function(req,res){
     res.send("Hello")
+})
+
+app.get('/data' , async function(req,res){
+    const data = await newcolDB.find();
+    res.json(data);
 })
 
 const __dirname1 = path.resolve();
